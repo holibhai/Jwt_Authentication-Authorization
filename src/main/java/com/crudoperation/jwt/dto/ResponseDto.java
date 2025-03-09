@@ -7,10 +7,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class ResponseDto {
         private AuthenticationDto authenticationDto;
         private UserAccountDto userAccountDto;
-        private String statusCode;
+        private int statusCode;
         private String statusMessage;
 
-    public ResponseDto(AuthenticationDto authenticationDto, UserAccountDto userAccountDto, String statusCode, String statusMessage) {
+    public ResponseDto(AuthenticationDto authenticationDto, UserAccountDto userAccountDto, int statusCode, String statusMessage) {
         this.authenticationDto = authenticationDto;
         this.userAccountDto = userAccountDto;
         this.statusCode = statusCode;
@@ -37,11 +37,11 @@ public class ResponseDto {
         this.userAccountDto = userAccountDto;
     }
 
-    public String getStatusCode() {
+    public int getStatusCode() {
         return statusCode;
     }
 
-    public void setStatusCode(String statusCode) {
+    public void setStatusCode(int statusCode) {
         this.statusCode = statusCode;
     }
 
