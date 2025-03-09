@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
+import com.crudoperation.jwt.entity.Role;
 import java.util.Collection;
 import java.util.List;
 
@@ -31,8 +31,8 @@ public class UserAccount implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @Enumerated(value=EnumType.STRING)
-    Role role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
 
     public Integer getId() {
