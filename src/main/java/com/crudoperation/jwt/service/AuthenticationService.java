@@ -31,9 +31,14 @@ public class AuthenticationService {
 
     public ResponseDto register(UserAccount request ){
         UserAccount userAccount = new UserAccount();
+        userAccount.setUsername(request.getUsername());
+        userAccount.setPassword(passwordEncoder.encode(request.getPassword()));
+        userAccount.setFirstName(request.getFirstName());
+        userAccount.setLastName(request.getLastName());
+        userAccount.setRole(request.getRole());
 
 
-        userAccount=userRepository.save(request);
+        userAccount=userRepository.save(userAccount);
         UserAccountDto userAccountDto= MapUtils.mapUserEntityToUserAccountDto(userAccount);
         String token = jwtSerivice.generateToken(userAccount);
 
@@ -41,13 +46,13 @@ public class AuthenticationService {
         ResponseDto responseDto=new ResponseDto();
         responseDto.setAuthenticationDto(authenticationDto);
         responseDto.setUserAccountDto(userAccountDto);
-        responseDto.setStatusCode("200");
+        responseDto.setStatusCode(200);
         responseDto.setStatusMessage("successfully registered");
 
         return responseDto;
     }
 
-    public AuthenticationResponse authenticate(UserAccount request) {
+    public ResponseDto authenticate(UserAccount request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),
@@ -56,7 +61,15 @@ public class AuthenticationService {
         );
         UserAccount user = userRepository.findByUsername(request.getUsername()).orElseThrow();
         String token = jwtSerivice.generateToken(user);
+        AuthenticationDto authenticationDto=new AuthenticationDto(token);
+        UserAccountDto userAccountDto= MapUtils.mapUserEntityToUserAccountDto(user);
+        ResponseDto responseDto=new ResponseDto();
+        responseDto.setAuthenticationDto(authenticationDto);
+        responseDto.setUserAccountDto(userAccountDto);
+        responseDto.setStatusCode(200);
+        responseDto.setStatusMessage("successfully authenticated");
 
-        return new AuthenticationResponse(token);
+        return responseDto;
+
     }
 }
