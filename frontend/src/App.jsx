@@ -17,7 +17,6 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-         
         <Route element={<PrivateRoute />}>
           <Route path="/admin" element={<Admin_Only />} />
         </Route>
